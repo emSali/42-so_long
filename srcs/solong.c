@@ -6,12 +6,12 @@
 /*   By: esali <esali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 18:35:58 by esali             #+#    #+#             */
-/*   Updated: 2023/02/21 20:51:13 by esali            ###   ########.fr       */
+/*   Updated: 2023/03/02 17:11:03 by esali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../solong.h"
+#include "solong.h"
 
 int	main() {
-	ft_printf("Hello world");
+	return (1);
 }
