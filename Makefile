@@ -10,39 +10,43 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS 		= srcs/solong.c
+NAME = so_long
 
-MLX			= ./mlx
-LIBFT		= ./libft
-INMLX		= -Lmlx -lmlx
-INLIBFT		= -L./libft -lft
+SRCS = srcs/solong.c
 
-CC			= gcc
-RM			= rm -f
-CFLAGS		= -Wall -Wextra -Werror
-RUN			= ar rcs
-NAME 		= so_long
+LIBFT_A = libft.a
+LIBFT_DIR = libft/
+LIBFT  = $(addprefix $(LIBFT_DIR), $(LIBFT_A))
 
-OBJS 		= $(SRCS:.c=.o)
+MLX = mlx_linux/libmlx.a
+
+OBJS = $(SRCS:.c=.o)
+	
+RM				= rm -f
+FLAGS			= -Wall -Wextra -Werror -I.
+INCLUDE			= -Lmlx_linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 %.o: %.c
-	$(CC) $(CFLAGS) -Imlx -c $< -o $@
+	gcc $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(MAKE) -C $(LIBFT)
-	$(MAKE) -C $()
-	$(CC) $(OBJ) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(MAKE) -C $(LIBFT_DIR)
+	mv solong.o srcs
+	gcc $(FLAGS) -fsanitize=address $(OBJS) $(LIBFT) $(MLX) $(INCLUDE) -o $(NAME)
+
+$(OBJS): $(SRCS)
+	gcc $(FLAGS) -c $(SRCS)
 
 clean:
-	$(MAKE) clean -C $(LIBFT)
-	$(MAKE) clean -C $(MLX)
+	$(MAKE) clean -C $(LIBFT_DIR)
 	$(RM) $(NAME) $(OBJS)
 
 fclean:
-	$(MAKE) fclean -C $(LIBFT)
-	$(MAKE) clean -C $(MLX)
+	$(MAKE) fclean -C $(LIBFT_DIR)
 	$(RM) $(NAME) $(OBJS)
 
 re: fclean all
+
+.PHONY: all clean fclean re
