@@ -18,8 +18,8 @@
 
 typedef struct s_win // struct representing window
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
+	void	*mlx_ptr; //program instance, created through mlx_init()
+	void	*win_ptr; //adress of window
 	int		height;
 	int		width;
 }		t_win;
@@ -29,11 +29,11 @@ typedef struct s_img // struct representing image
 	t_win	win; //window
 	void	*img_ptr; //address of mlx image instance
 	char	*addr; //adress, where chain of bytes starts
-	int		h; //image-height
-	int		w; //image-width
-	int		bpp; //bits per pixel
+	int		height; //image-height
+	int		width; //image-width
+	int		bpp; //bits per pixel (bpp = 32 -> 4 bytes / pixel)
 	int		endian; // 
-	int		line_len;
+	int		line_len; //number of bytes per line
 }		t_img;
 
 
