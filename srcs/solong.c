@@ -13,7 +13,25 @@
 #include "solong.h"
 
 
-t_img	new_img(int w, int h, t_win window)
+//put color at dst and make  sure it is inside picture size
+void	put_pixel_img(t_img img, int x, int y, int color)
+{
+	char	*dst;
+
+	//protect image border
+	if (x >= 0 && y >= 0 && x < img.width && y < img.height) {
+		/*
+		(line_len * y) is the start of the colum on the addr.
+		(bpp / 8) where 8 represents 8 bits per character, to find out how many bytes is one pixel.
+		(x * (bpp / 8)) is the column of the pixel
+		*/
+		dst = img.addr + (y * img.line_len + x * (img.bpp / 8));
+		*(unsigned int *) dst = color;
+	}
+}
+
+//create image struct with all data needed for image
+t_img	new_img(int w, int h, t_win window) 
 {
 	t_img	image;
 
@@ -47,10 +65,8 @@ int	main(void)
 	if (!win.mlx_ptr || !win.win_ptr)
 		return (1);
 		
-	image = new_img(4, 4, win);
-	//if (!image.img_ptr || !image.addr)
-	//	return (1);
-	memcpy(image.addr, "s4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vf", 16*4);
+	image = new_img(300, 300, win);
+	put_pixel_img(image, 150, 150, 0x00FF0000);
 	mlx_put_image_to_window(image.win.mlx_ptr, image.win.win_ptr, image.img_ptr, 10, 10); //put 4x4 pixel to coorrdinates [10, 10]
 
 	mlx_loop(win.mlx_ptr); //infinite loop to keep program running and window open
