@@ -6,69 +6,75 @@
 /*   By: esali <esali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 18:35:58 by esali             #+#    #+#             */
-/*   Updated: 2023/03/02 17:11:03 by esali            ###   ########.fr       */
+/*   Updated: 2023/03/08 12:32:05 by esali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
 
-//put color at dst and make  sure it is inside picture size
-void	put_pixel_img(t_img img, int x, int y, int color)
+//function called from mlx_hook() to end programm
+int	exit_window(t_win *window)
 {
-	char	*dst;
-
-	//protect image border
-	if (x >= 0 && y >= 0 && x < img.width && y < img.height) {
-		/*
-		(line_len * y) is the start of the colum on the addr.
-		(bpp / 8) where 8 represents 8 bits per character, to find out how many bytes is one pixel.
-		(x * (bpp / 8)) is the column of the pixel
-		*/
-		dst = img.addr + (y * img.line_len + x * (img.bpp / 8));
-		*(unsigned int *) dst = color;
-	}
+	if (window)
+		mlx_destroy_window(window->mlx_ptr, window->win_ptr); //destroys window accordingly (frees?)
+	exit(EXIT_SUCCESS);
 }
 
-//create image struct with all data needed for image
-t_img	new_img(int w, int h, t_win window) 
-{
-	t_img	image;
+/*
+t_img	new_img(void *mlx_ptr) {
+	int		h;
+	int		w;
+	void	*img;
 
-	image.win = window;
-	image.img_ptr = mlx_new_image(window.mlx_ptr, w, h);
-	image.addr = mlx_get_data_addr(image.img_ptr, &(image.bpp),
-			&(image.line_len), &(image.endian));
-	image.width = w;
-	image.height = h;
-	return (image);
+	img = mlx_xpm_file_to_image(mlx_ptr, "./character.xpm", &h, &w);
+	return ((t_img) {img, h, w});
 }
 
-
-t_win new_window(int w, int h, char *str)
+//create window structure and initialize it
+t_win	new_window(int w, int h, char *str)
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	t_pos	pos;
+	t_img	image;
 
 	mlx_ptr = mlx_init(); //create program instance
 	win_ptr = mlx_new_window(mlx_ptr, w, h, str); //window pointer -> instance of window
-	return ((t_win) {mlx_ptr, win_ptr, w, h});
+	pos = ((t_pos) {10, 10});
+	image = new_img(mlx_ptr);
+	return ((t_win) {mlx_ptr, win_ptr, w, h, image, pos});
 }
 
+t_img	*new_img(t_win window)
+{
+	t_img	*image;
+
+	image = malloc(sizeof(t_img) * 1);
+		if (!image)
+			return image;
+	image->win = window;
+	image->img_ptr = mlx_xpm_file_to_image(image->win.mlx_ptr, "coins_new.xpm", &image->width, &image->height);
+	//image.img_ptr = mlx_new_image(window.mlx_ptr, w, h);
+	//image.addr = mlx_get_data_addr(image.img_ptr, &(image.bpp), &(image.line_len), &(image.endian)); // gets data adress of current image
+	return (image);
+}
+*/
 
 int	main(void)
 {
 	t_win	win;
-	t_img	image;
 
-	win = new_window(300, 300, "Game");
+	win.mlx_ptr = mlx_init();
+	win.win_ptr = mlx_new_window(win.mlx_ptr, 300, 300, "SoLong");
 	if (!win.mlx_ptr || !win.win_ptr)
 		return (1);
-		
-	image = new_img(300, 300, win);
-	put_pixel_img(image, 150, 150, 0x00FF0000);
-	mlx_put_image_to_window(image.win.mlx_ptr, image.win.win_ptr, image.img_ptr, 10, 10); //put 4x4 pixel to coorrdinates [10, 10]
 
+	win.image.player = mlx_xpm_file_to_image(win.mlx_ptr, "./assets/player.xpm", &win.image.width, &win.image.height);
+	mlx_put_image_to_window(win.mlx_ptr, win.win_ptr, win.image.player, 150, 150); //put image to coorrdinates [10, 10]
+
+
+	mlx_hook(win.win_ptr, 17, 0, exit_window, &win);
 	mlx_loop(win.mlx_ptr); //infinite loop to keep program running and window open
 	return (0);
 
