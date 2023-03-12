@@ -6,13 +6,13 @@
 #    By: esali <esali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/21 19:37:29 by esali             #+#    #+#              #
-#    Updated: 2023/03/08 11:43:48 by esali            ###   ########.fr        #
+#    Updated: 2023/03/11 14:02:57 by esali            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 
-SRCS = srcs/solong.c srcs/check_map.c
+SRCS = srcs/solong.c srcs/check_map.c srcs/get_next_line.c srcs/print_map.c srcs/map.c
 
 LIBFT_A = libft.a
 LIBFT_DIR = libft/
@@ -35,7 +35,7 @@ $(NAME): $(OBJS)
 	$(MAKE) -C $(LIBFT_DIR)
 	gcc $(FLAGS) -c $(SRCS)
 	mv *.o srcs
-	gcc $(FLAGS) -fsanitize=address $(OBJS) $(LIBFT) $(MLX) $(INCLUDE) -o $(NAME)
+	gcc $(FLAGS) -fsanitize=address -g $(OBJS) $(LIBFT) $(MLX) $(INCLUDE) -o $(NAME)
 
 clean:
 	$(MAKE) clean -C $(LIBFT_DIR)
