@@ -6,7 +6,7 @@
 /*   By: esali <esali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 18:37:32 by esali             #+#    #+#             */
-/*   Updated: 2023/03/12 10:37:52 by esali            ###   ########.fr       */
+/*   Updated: 2023/03/17 13:11:52 by esali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,14 @@ typedef struct	s_win // struct representing window
 {
 	void	*mlx_ptr; //program instance, created through mlx_init()
 	void	*win_ptr; //adress of window
-	//int		height;
-	// int		width;
+	int		height;
+	int		width;
 	char	**map;
 	t_img	image;
 }		t_win;
 
+void	put_map(t_win win);
+int		check_path(char	**map, int row);
 int		check_wall(char	**map, int len, int row);
 char	check_components_row(char *row, int *epc);
 int		check_components(char **map);
@@ -47,7 +49,7 @@ void	free_map(char **map);
 int		check_size(char	**map, size_t len);
 int		check_map(t_win win);
 void	print_map(char **map); //for testing
-char	**save_map(char *str);
+char	**save_map(char *str, int *len, int *width);
 char	*get_next_line(int fd);
 char	*concat(char *str1, char *str2);
 char	*gnl(char *ret, char *save_file, int fd);

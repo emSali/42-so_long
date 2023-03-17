@@ -6,13 +6,14 @@
 #    By: esali <esali@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/21 19:37:29 by esali             #+#    #+#              #
-#    Updated: 2023/03/11 14:02:57 by esali            ###   ########.fr        #
+#    Updated: 2023/03/12 12:15:38 by esali            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 
-SRCS = srcs/solong.c srcs/check_map.c srcs/get_next_line.c srcs/print_map.c srcs/map.c
+SRCS = 	srcs/solong.c srcs/check_map.c srcs/get_next_line.c srcs/print_map.c srcs/map.c \
+		srcs/check_path.c
 
 LIBFT_A = libft.a
 LIBFT_DIR = libft/

@@ -6,7 +6,7 @@
 /*   By: esali <esali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 18:35:58 by esali             #+#    #+#             */
-/*   Updated: 2023/03/12 10:38:38 by esali            ###   ########.fr       */
+/*   Updated: 2023/03/17 13:15:54 by esali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,24 @@ int	main(int argc, char *argv[])
 {
 	t_win	win;
 
+	//write func check_argc, if wrong ending, wrong amount of arguments, etc, give message and stop program
+	//is empty map working?
 	if (argc != 2)
 		return (1);
-	win.map = save_map(argv[1]);
+	win.map = save_map(argv[1], &win.height, &win.width);
 	if (win.map == NULL)
 		return (1);
+	ft_printf("\nw: %i, h: %i", win.width, win.height);
 	print_map(win.map); //remove
 	if (check_map(win))
 		return(1);
 	win.mlx_ptr = mlx_init();
-	win.win_ptr = mlx_new_window(win.mlx_ptr, 300, 300, "SoLong");
+	win.win_ptr = mlx_new_window(win.mlx_ptr, win.width * 64, win.height * 64, "SoLong");
 	if (!win.mlx_ptr || !win.win_ptr)
 		return (1);
-
 	win.image = add_assets(win.mlx_ptr);
-	mlx_put_image_to_window(win.mlx_ptr, win.win_ptr, win.image.player, 150, 150);
-	mlx_put_image_to_window(win.mlx_ptr, win.win_ptr, win.image.wall, 0, 0);
-	mlx_put_image_to_window(win.mlx_ptr, win.win_ptr, win.image.exit, 150, 0);
-	mlx_put_image_to_window(win.mlx_ptr, win.win_ptr, win.image.empty, 100, 150);
-	mlx_put_image_to_window(win.mlx_ptr, win.win_ptr, win.image.collectible, 200, 200);
+	put_map(win);
+
 
 	mlx_hook(win.win_ptr, 17, 0, exit_window, &win);
 	mlx_loop(win.mlx_ptr); //infinite loop to keep program running and window open

@@ -6,7 +6,7 @@
 /*   By: esali <esali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 11:34:20 by esali             #+#    #+#             */
-/*   Updated: 2023/03/12 10:38:59 by esali            ###   ########.fr       */
+/*   Updated: 2023/03/12 18:55:16 by esali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ int check_map(t_win win)
 		free_map(win.map);
 		return(1);
 	}
+	if (check_path(win.map, row) == 0)
+	{
+		ft_printf("\nERROR: There is no possible path");
+		free_map(win.map);
+		return (1);
+	}
+	else if (check_path(win.map, row) == 1)
+		ft_printf("\nThe Path is possible");
+	else if (check_path(win.map, row) == 2)
+		ft_printf("\nIs_Path did not return");
 	return 0;
 }
 
