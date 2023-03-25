@@ -55,7 +55,7 @@ int	main(int argc, char *argv[])
 	win.image = add_assets(win.mlx_ptr);
 	put_map(win);
 
-	mlx_key_hook(win.mlx_ptr, move, &win);
+	//mlx_key_hook(win.mlx_ptr, move, &win);
 	mlx_hook(win.win_ptr, 17, 0, exit_window, &win);
 	mlx_loop(win.mlx_ptr); //infinite loop to keep program running and window open
 	return (0);

@@ -12,8 +12,8 @@
 
 #include "solong.h"
 
-void	move(int key_code, t_win win)
-{
-	if (key_code == KEY_ESC)
-		exit_window(win);
-}
+// void	move(int key_code, t_win win)
+// {
+// 	if (key_code == KEY_ESC)
+// 		exit_window(win);
+// }

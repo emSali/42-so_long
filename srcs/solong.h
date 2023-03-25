@@ -46,7 +46,8 @@ typedef struct	s_win // struct representing window
 	t_img	image;
 }		t_win;
 
-void	move(int key_code, t_win win);
+int		exit_window(t_win *window);
+// void	move(int key_code, t_win win);
 void	put_map(t_win win);
 int		check_path(char	**map, int row);
 int		check_wall(char	**map, int len, int row);
