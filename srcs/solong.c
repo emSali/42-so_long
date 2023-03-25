@@ -6,7 +6,7 @@
 /*   By: esali <esali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 18:35:58 by esali             #+#    #+#             */
-/*   Updated: 2023/03/17 13:15:54 by esali            ###   ########.fr       */
+/*   Updated: 2023/03/18 11:47:12 by esali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int argc, char *argv[])
 	win.image = add_assets(win.mlx_ptr);
 	put_map(win);
 
-
+	mlx_key_hook(win.mlx_ptr, move, &win);
 	mlx_hook(win.win_ptr, 17, 0, exit_window, &win);
 	mlx_loop(win.mlx_ptr); //infinite loop to keep program running and window open
 	return (0);

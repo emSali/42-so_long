@@ -6,7 +6,7 @@
 /*   By: esali <esali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 18:37:32 by esali             #+#    #+#             */
-/*   Updated: 2023/03/17 13:11:52 by esali            ###   ########.fr       */
+/*   Updated: 2023/03/18 11:46:33 by esali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 # include <fcntl.h>
 #include "../mlx_linux/mlx.h"
 #include "../libft/libft.h"
+
+#define KEY_W 119
+#define KEY_D 100
+#define KEY_S 115
+#define KEY_A 97
+#define KEY_ESC 65307
 
 typedef struct	s_img // struct representing image
 {
@@ -40,6 +46,7 @@ typedef struct	s_win // struct representing window
 	t_img	image;
 }		t_win;
 
+void	move(int key_code, t_win win);
 void	put_map(t_win win);
 int		check_path(char	**map, int row);
 int		check_wall(char	**map, int len, int row);
