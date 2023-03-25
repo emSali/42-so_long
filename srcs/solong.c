@@ -33,14 +33,36 @@ t_img	add_assets(void *mlx_ptr)
 	return (image);
 }
 
+int	check_arg(int argc, char *argv[])
+{
+	int	len;
+	int i;
+
+	if (argc != 2 || ft_strlen(argv[1]) < 5)
+	{
+		ft_printf("\nThere needs to be 2 arguments and the secons one neds to end with .ber");
+		return (1);
+	}
+	i = 0;
+	len = ft_strlen(argv[1]);
+	while(i < (len -4))
+	{
+		argv[1]++;
+		i++;
+	}
+	if (ft_strncmp(".ber", argv[1], 4) != 0) {
+		ft_printf("\nThe argument needs to be of type .ber");
+		return (1);
+	}
+	return (0);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_win	win;
 
-	//write func check_argc, if wrong ending, wrong amount of arguments, etc, give message and stop program
-	//is empty map working?
-	if (argc != 2)
-		return (1);
+	if (check_arg(argc, argv))
+		return (0);
 	win.map = save_map(argv[1], &win.height, &win.width);
 	if (win.map == NULL)
 		return (1);
@@ -54,8 +76,8 @@ int	main(int argc, char *argv[])
 		return (1);
 	win.image = add_assets(win.mlx_ptr);
 	put_map(win);
-
-	//mlx_key_hook(win.mlx_ptr, move, &win);
+	set_start(win.map);
+	mlx_key_hook(win.win_ptr, key_pressed, &win);
 	mlx_hook(win.win_ptr, 17, 0, exit_window, &win);
 	mlx_loop(win.mlx_ptr); //infinite loop to keep program running and window open
 	return (0);

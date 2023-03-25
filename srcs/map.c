@@ -27,11 +27,15 @@ char	**save_map(char *link, int *len, int *width)
 		return (NULL);
 	}
 	str = get_next_line(fd);
-	// TODO: check if somewhere empty line!!!
+	if (str == NULL)
+	{
+		ft_printf("\nERROR: Empty map");
+		return (NULL);
+	}
 	map = ft_split(str, '\n');
 	free (str);
 	if (*map == NULL)
-		ft_printf("\nERROR: Empty map");
+		ft_printf("\nERROR2: Empty map");
 	i = 0;
 	while(map[i])
 		i++;
@@ -79,3 +83,4 @@ void	put_map(t_win win)
 	y++;
 	}
 }
+
