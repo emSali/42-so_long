@@ -34,17 +34,14 @@ char	**save_map(char *link, int *len, int *width)
 	}
 	map = ft_split(str, '\n');
 	free (str);
-	if (*map == NULL)
-		ft_printf("\nERROR2: Empty map");
 	i = 0;
-	while(map[i])
-		i++;
+	while (map[i++])
 	*len = i;
 	*width = ft_strlen(map[0]);
 	return (map);
 }
 
-void free_map(char **map)
+void	free_map(char **map)
 {
 	int	i;
 
@@ -57,30 +54,29 @@ void free_map(char **map)
 	free(map);
 }
 
-void	put_map(t_win win)
+void	put_map(void *m, void *w, t_img i, char **map)
 {
 	int	x;
 	int	y;
 
 	y = 0;
-	while(win.map[y])
+	while (map[y])
 	{
 		x = 0;
-		while(win.map[y][x])
+		while (map[y][x])
 		{
-			if(win.map[y][x] == '1')
-				mlx_put_image_to_window(win.mlx_ptr, win.win_ptr, win.image.wall, 64 * x, 64 * y);
-			else if(win.map[y][x] == '0')
-				mlx_put_image_to_window(win.mlx_ptr, win.win_ptr, win.image.empty, 64 * x, 64 * y);
-			else if(win.map[y][x] == 'E')
-				mlx_put_image_to_window(win.mlx_ptr, win.win_ptr, win.image.exit, 64 * x, 64 * y);
-			else if(win.map[y][x] == 'C')
-				mlx_put_image_to_window(win.mlx_ptr, win.win_ptr, win.image.collectible, 64 * x, 64 * y);
-			else if(win.map[y][x] == 'P')
-				mlx_put_image_to_window(win.mlx_ptr, win.win_ptr, win.image.player, 64 * x, 64 * y);
+			if (map[y][x] == '1')
+				mlx_put_image_to_window(m, w, i.wall, 64 * x, 64 * y);
+			else if (map[y][x] == '0')
+				mlx_put_image_to_window(m, w, i.empty, 64 * x, 64 * y);
+			else if (map[y][x] == 'E')
+				mlx_put_image_to_window(m, w, i.exit, 64 * x, 64 * y);
+			else if (map[y][x] == 'C')
+				mlx_put_image_to_window(m, w, i.collectible, 64 * x, 64 * y);
+			else if (map[y][x] == 'P')
+				mlx_put_image_to_window(m, w, i.player, 64 * x, 64 * y);
 			x++;
 		}
 	y++;
 	}
 }
-

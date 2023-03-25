@@ -22,38 +22,40 @@ int	exit_window(t_win *window)
 
 t_img	add_assets(void *mlx_ptr)
 {
-	t_img image;
+	t_img	image;
 
-	image.player = mlx_xpm_file_to_image(mlx_ptr, "./assets/player.xpm", &image.width, &image.height);
-	image.exit = mlx_xpm_file_to_image(mlx_ptr, "./assets/treasure.xpm", &image.width, &image.height);
-	image.empty = mlx_xpm_file_to_image(mlx_ptr, "./assets/grass.xpm", &image.width, &image.height);
-	image.wall = mlx_xpm_file_to_image(mlx_ptr, "./assets/wall.xpm", &image.width, &image.height);
-	image.collectible = mlx_xpm_file_to_image(mlx_ptr, "./assets/coins.xpm", &image.width, &image.height);
-
+	image.player = mlx_xpm_file_to_image(mlx_ptr, \
+	"./assets/player.xpm", &image.width, &image.height);
+	image.exit = mlx_xpm_file_to_image(mlx_ptr, \
+	"./assets/treasure.xpm", &image.width, &image.height);
+	image.empty = mlx_xpm_file_to_image(mlx_ptr, \
+	"./assets/grass.xpm", &image.width, &image.height);
+	image.wall = mlx_xpm_file_to_image(mlx_ptr, \
+	"./assets/wall.xpm", &image.width, &image.height);
+	image.collectible = mlx_xpm_file_to_image(mlx_ptr, \
+	"./assets/coins.xpm", &image.width, &image.height);
 	return (image);
 }
 
 int	check_arg(int argc, char *argv[])
 {
-	int	len;
-	int i;
+	int		len;
+	char	*str;
 
 	if (argc != 2 || ft_strlen(argv[1]) < 5)
 	{
-		ft_printf("\nThere needs to be 2 arguments and the secons one neds to end with .ber");
+		ft_printf("\n2 arguments needed, 2. ending with .ber");
 		return (1);
 	}
-	i = 0;
 	len = ft_strlen(argv[1]);
-	while(i < (len -4))
+	str = ft_substr(argv[1], len - 4, 4);
+	if (ft_strncmp(".ber", str, 4) != 0)
 	{
-		argv[1]++;
-		i++;
-	}
-	if (ft_strncmp(".ber", argv[1], 4) != 0) {
 		ft_printf("\nThe argument needs to be of type .ber");
+		free(str);
 		return (1);
 	}
+	free(str);
 	return (0);
 }
 
@@ -66,20 +68,18 @@ int	main(int argc, char *argv[])
 	win.map = save_map(argv[1], &win.height, &win.width);
 	if (win.map == NULL)
 		return (1);
-	ft_printf("\nw: %i, h: %i", win.width, win.height);
-	print_map(win.map); //remove
 	if (check_map(win))
-		return(1);
+		return (1);
 	win.mlx_ptr = mlx_init();
-	win.win_ptr = mlx_new_window(win.mlx_ptr, win.width * 64, win.height * 64, "SoLong");
+	win.win_ptr = mlx_new_window(win.mlx_ptr, \
+	win.width * 64, win.height * 64, "SoLong");
 	if (!win.mlx_ptr || !win.win_ptr)
 		return (1);
 	win.image = add_assets(win.mlx_ptr);
-	put_map(win);
+	put_map(win.mlx_ptr, win.win_ptr, win.image, win.map);
 	set_start(win.map);
 	mlx_key_hook(win.win_ptr, key_pressed, &win);
 	mlx_hook(win.win_ptr, 17, 0, exit_window, &win);
 	mlx_loop(win.mlx_ptr); //infinite loop to keep program running and window open
 	return (0);
-
 }

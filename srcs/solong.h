@@ -16,16 +16,16 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
-#include "../mlx_linux/mlx.h"
-#include "../libft/libft.h"
+# include "../mlx_linux/mlx.h"
+# include "../libft/libft.h"
 
-#define KEY_W 119
-#define KEY_D 100
-#define KEY_S 115
-#define KEY_A 97
-#define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_D 100
+# define KEY_S 115
+# define KEY_A 97
+# define KEY_ESC 65307
 
-typedef struct	s_img // struct representing image
+typedef struct s_img // struct representing image
 {
 	void	*empty; //address of mlx image instance empty
 	void	*wall;
@@ -36,7 +36,7 @@ typedef struct	s_img // struct representing image
 	int		width; //image-width
 }		t_img;
 
-typedef struct	s_win // struct representing window
+typedef struct s_win // struct representing window
 {
 	void	*mlx_ptr; //program instance, created through mlx_init()
 	void	*win_ptr; //adress of window
@@ -49,7 +49,7 @@ typedef struct	s_win // struct representing window
 void	set_start(char **map);
 int		exit_window(t_win *window);
 int		key_pressed(int key_code, t_win *win);
-void	put_map(t_win win);
+void	put_map(void *m, void *w, t_img i, char **map);
 int		check_path(char	**map, int row);
 int		check_wall(char	**map, int len, int row);
 char	check_components_row(char *row, int *epc);
