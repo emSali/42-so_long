@@ -13,19 +13,19 @@
 #include "solong.h"
 
 //returns 1 if invalid
-int check_map(t_win win)
+int	check_map(t_win win)
 {
 	int	len;
-	int row;
+	int	row;
 
 	len = ft_strlen(win.map[0]);
 	row = 0;
 	while (win.map[row] != NULL)
 		row++;
-	if (check_size(win.map, len) || check_components(win.map) || check_wall(win.map, len, row))
+	if (c_size(win.map, len) || c_comp(win.map) || c_wall(win.map, len, row))
 	{
 		free_map(win.map);
-		return(1);
+		return (1);
 	}
 	if (check_path(win.map, row) == 0)
 	{
@@ -37,7 +37,7 @@ int check_map(t_win win)
 		ft_printf("\nThe Path is possible");
 	else if (check_path(win.map, row) == 2)
 		ft_printf("\nIs_Path did not return");
-	return 0;
+	return (0);
 }
 
 int	check_size(char **map, size_t len)
@@ -46,8 +46,8 @@ int	check_size(char **map, size_t len)
 	{
 		if (ft_strlen(*map) != len)
 		{
-		ft_printf("\nERROR: Map must be rectangular");
-		return (1);
+			ft_printf("\nERROR: Map must be rectangular");
+			return (1);
 		}
 		map++;
 	}
@@ -77,24 +77,24 @@ char	check_components_row(char *row, int *epc)
 
 //checks if 1 E, 1 P and > 1 C
 //epc: exit, player, collectible
-int	check_components(char **map)
+int	check_comp(char **map)
 {
-	int i;
-	int	epc[3];
-	char ret;
+	int		i;
+	int		epc[3];
+	char	ret;
 
 	i = 0;
-	while(i < 3)
+	while (i < 3)
 		epc[i++] = 0;
 	i = 0;
-	while(map[i])
+	while (map[i])
 	{
 		ret = check_components_row(map[i], epc);
 		i++;
 	}
 	if (epc[0] != 1 || epc[1] != 1 || epc[2] == 0)
 	{
-		ft_printf("\nERROR: The Map must contain 1 exit, 1 starting point and at least 1 collectible.");
+		ft_printf("\nERROR: The Map must contain: 1 exit, 1, >= 1 collectible.");
 		return (1);
 	}
 	if (ret)
@@ -112,7 +112,7 @@ int	check_wall(char	**map, int len, int row)
 
 	ret = 0;
 	i = 0;
-	while(i < len)
+	while (i < len)
 	{
 		if (map[0][i] != '1')
 			ret = 1;
@@ -133,5 +133,3 @@ int	check_wall(char	**map, int len, int row)
 		printf("\nERROR: The map must be surrounded by walls");
 	return (ret);
 }
-
-

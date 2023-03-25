@@ -51,11 +51,11 @@ int		exit_window(t_win *window);
 int		key_pressed(int key_code, t_win *win);
 void	put_map(void *m, void *w, t_img i, char **map);
 int		check_path(char	**map, int row);
-int		check_wall(char	**map, int len, int row);
+int		c_wall(char	**map, int len, int row);
 char	check_components_row(char *row, int *epc);
-int		check_components(char **map);
+int		c_comp(char **map);
 void	free_map(char **map);
-int		check_size(char	**map, size_t len);
+int		c_size(char	**map, size_t len);
 int		check_map(t_win win);
 void	print_map(char **map); //for testing
 char	**save_map(char *str, int *len, int *width);
