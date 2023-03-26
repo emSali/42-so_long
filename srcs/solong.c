@@ -6,7 +6,7 @@
 /*   By: esali <esali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 18:35:58 by esali             #+#    #+#             */
-/*   Updated: 2023/03/18 11:47:12 by esali            ###   ########.fr       */
+/*   Updated: 2023/03/26 17:00:49 by esali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	exit_window(t_win *window)
 	exit(EXIT_SUCCESS);
 }
 
+//adds images to struct t_img
 t_img	add_assets(void *mlx_ptr)
 {
 	t_img	image;
@@ -37,6 +38,7 @@ t_img	add_assets(void *mlx_ptr)
 	return (image);
 }
 
+//checks args are correct
 int	check_arg(int argc, char *argv[])
 {
 	int		len;

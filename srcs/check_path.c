@@ -6,33 +6,46 @@
 /*   By: esali <esali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 10:50:18 by esali             #+#    #+#             */
-/*   Updated: 2023/03/12 20:19:56 by esali            ###   ########.fr       */
+/*   Updated: 2023/03/26 17:13:25 by esali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-char	**c_map;
+char	**g_c_map;
+
+//if exit found, is checking if there is a P arround
+int	check_surrounding(int y, int x)
+{
+	int	is_reached;
+
+	is_reached = 0;
+	if (g_c_map[y - 1][x] == 'P' || g_c_map[y + 1][x] == 'P')
+		is_reached = 1;
+	if (g_c_map[y][x + 1] == 'P' || g_c_map[y][x - 1] == 'P')
+		is_reached = 1;
+	return (is_reached);
+}
 
 //checks if no C is left and E is reached, returns zero if not reached
-int no_c(){
+int	no_c(void)
+{
 	int	x;
 	int	y;
-	int is_reached;
+	int	is_reached;
 
 	y = 1;
 	is_reached = 0;
-	while(c_map[y] != 0)
+	while (g_c_map[y] != 0)
 	{
 		x = 0;
-		while(c_map[y][x] != 0)
+		while (g_c_map[y][x] != 0)
 		{
-			if (c_map[y][x] == 'C')
+			if (g_c_map[y][x] == 'C')
 				return (0);
-			if (c_map[y][x] == 'E')
+			if (g_c_map[y][x] == 'E')
 			{
-				if ((c_map[y - 1][x]) == 'P' || c_map[y + 1][x] == 'P' || c_map[y][x + 1] == 'P' || c_map[y][x - 1] == 'P')
-					is_reached = 1;
+				is_reached = check_surrounding(y, x);
 			}
 			x++;
 		}
@@ -41,67 +54,74 @@ int no_c(){
 	return (is_reached);
 }
 
-// returns 1 if there is path
+// checks recursive; returns 1 if there is path
 int	is_path(int y, int x)
 {
-	if (no_c())
-		return (1);
-	if (c_map[y + 1][x] == '0' || c_map[y + 1][x] == 'C' ){
-		c_map[y + 1][x] = 'P';
+	if (g_c_map[y + 1][x] == '0' || g_c_map[y + 1][x] == 'C' )
+	{
+		g_c_map[y + 1][x] = 'P';
 		if (is_path(y + 1, x))
 			return (1);
 	}
-	if (c_map[y][x - 1] == '0' || c_map[y][x - 1] == 'C' )
+	if (g_c_map[y][x - 1] == '0' || g_c_map[y][x - 1] == 'C' )
 	{
-		c_map[y][x - 1] = 'P';
+		g_c_map[y][x - 1] = 'P';
 		if (is_path(y, x - 1))
 			return (1);
 	}
-	if (c_map[y - 1][x] == '0' || c_map[y - 1][x] == 'C' )
+	if (g_c_map[y - 1][x] == '0' || g_c_map[y - 1][x] == 'C' )
 	{
-		c_map[y - 1][x] = 'P';
+		g_c_map[y - 1][x] = 'P';
 		if (is_path(y - 1, x))
 			return (1);
 	}
-	if (c_map[y][x + 1] == '0' || c_map[y][x + 1] == 'C' )
+	if (g_c_map[y][x + 1] == '0' || g_c_map[y][x + 1] == 'C' )
 	{
-		c_map[y][x + 1] = 'P';
+		g_c_map[y][x + 1] = 'P';
 		if (is_path(y, x + 1))
 			return (1);
 	}
-	return (0);
+	return (no_c());
 }
 
-int	check_path(char	**map, int row)
+//searches player and starts recursive func is_path
+int	ret_is_path(void)
 {
-	int	x;
 	int	y;
-	int	ret;
+	int	x;
 
-	c_map = (char **) malloc(sizeof(char *) * (row + 1));
-	if (!c_map)
-		return (0);
 	y = 0;
-	while(y < row)
-	{
-		c_map[y] = ft_strdup(map[y]);
-		y++;
-	}
-	c_map[row] = 0;
-	y = 0;
-	while(c_map[y])
+	while (g_c_map[y])
 	{
 		x = 0;
-		while(c_map[y][x])
+		while (g_c_map[y][x])
 		{
-			if (c_map[y][x] == 'P')
-				ret = is_path(y, x);
+			if (g_c_map[y][x] == 'P')
+				return (is_path(y, x));
 			x++;
 		}
 		y++;
 	}
-	free_map(c_map);
-	return (ret);
+	return (0);
 }
 
+//copys map and calls ret_is_path
+int	check_path(char	**map, int row)
+{
+	int	y;
+	int	ret;
 
+	g_c_map = (char **) malloc(sizeof(char *) * (row + 1));
+	if (!g_c_map)
+		return (0);
+	y = 0;
+	while (y < row)
+	{
+		g_c_map[y] = ft_strdup(map[y]);
+		y++;
+	}
+	g_c_map[row] = 0;
+	ret = ret_is_path();
+	free_map(g_c_map);
+	return (ret);
+}

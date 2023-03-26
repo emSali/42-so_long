@@ -6,7 +6,7 @@
 /*   By: esali <esali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 11:34:20 by esali             #+#    #+#             */
-/*   Updated: 2023/03/12 18:55:16 by esali            ###   ########.fr       */
+/*   Updated: 2023/03/26 17:05:47 by esali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,11 @@ int	check_map(t_win win)
 		free_map(win.map);
 		return (1);
 	}
-	else if (check_path(win.map, row) == 1)
-		ft_printf("\nThe Path is possible");
-	else if (check_path(win.map, row) == 2)
-		ft_printf("\nIs_Path did not return");
 	return (0);
 }
 
-int	check_size(char **map, size_t len)
+//checks if map rectangular
+int	c_size(char **map, size_t len)
 {
 	while (*map)
 	{
@@ -77,7 +74,7 @@ char	check_components_row(char *row, int *epc)
 
 //checks if 1 E, 1 P and > 1 C
 //epc: exit, player, collectible
-int	check_comp(char **map)
+int	c_comp(char **map)
 {
 	int		i;
 	int		epc[3];
@@ -105,7 +102,8 @@ int	check_comp(char **map)
 	return (0);
 }
 
-int	check_wall(char	**map, int len, int row)
+//checks if map surrounded by wall
+int	c_wall(char	**map, int len, int row)
 {
 	int	i;
 	int	ret;

@@ -6,7 +6,7 @@
 /*   By: esali <esali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 18:37:32 by esali             #+#    #+#             */
-/*   Updated: 2023/03/18 11:46:33 by esali            ###   ########.fr       */
+/*   Updated: 2023/03/26 17:01:00 by esali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,16 @@ typedef struct s_win // struct representing window
 	t_img	image;
 }		t_win;
 
+typedef struct s_game
+{
+	int		moves;
+	int		pos_y;
+	int		pos_x;
+}		t_game;
+
 void	set_start(char **map);
 int		exit_window(t_win *window);
-int		key_pressed(int key_code, t_win *win);
+int		key_pressed(int key, t_win *win);
 void	put_map(void *m, void *w, t_img i, char **map);
 int		check_path(char	**map, int row);
 int		c_wall(char	**map, int len, int row);

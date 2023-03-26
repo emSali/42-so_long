@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: esali <esali@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/26 15:41:40 by esali             #+#    #+#             */
+/*   Updated: 2023/03/26 17:00:48 by esali            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "solong.h"
 
-
 //just for testing
-void print_map(char **map)
+void	print_map(char **map)
 {
-	int i = 0;
-	while (map[i] != NULL) {
+	int	i;
+
+	i = 0;
+	while (map[i] != NULL)
+	{
 		ft_printf("\n%i: %s", i, map[i]);
 		i++;
 	}
 }
-
-

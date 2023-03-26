@@ -6,13 +6,13 @@
 /*   By: esali <esali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 13:48:02 by esali             #+#    #+#             */
-/*   Updated: 2023/03/17 13:19:02 by esali            ###   ########.fr       */
+/*   Updated: 2023/03/26 17:00:47 by esali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-//to shorten function change gnl to give string at once
+//reads map from .ber-file and saves it as matrix
 char	**save_map(char *link, int *len, int *width)
 {
 	int		fd;
@@ -41,6 +41,7 @@ char	**save_map(char *link, int *len, int *width)
 	return (map);
 }
 
+//frees map when needed
 void	free_map(char **map)
 {
 	int	i;
@@ -54,6 +55,7 @@ void	free_map(char **map)
 	free(map);
 }
 
+//puts map on window
 void	put_map(void *m, void *w, t_img i, char **map)
 {
 	int	x;
